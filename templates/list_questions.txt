@@ -1,0 +1,5 @@
+List of questions{% if status != statusEnum.pending %} with status {{ statusEnum.nameForStatus(status) }}{% endif %}:{% for question in questions %}
+{{ question.number }}{% if status == statusEnum.all %} ({{ statusEnum.nameForStatus(question.status) }}){% endif %}: {{ question.question }}{% endfor %}
+To publish: /ask publish <question-number> <channel-name>
+To delete /ask delete <question-number>
+For more help: /ask help

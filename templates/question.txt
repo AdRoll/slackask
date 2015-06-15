@@ -1,0 +1,2 @@
+{{ username }} was asked the following question:
+{{ question.question }}

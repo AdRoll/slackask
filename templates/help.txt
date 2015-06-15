@@ -1,0 +1,23 @@
+Welcome to Slack Ask!
+You can ask a question to anybody by typing:
+/ask <user-name> Put your question here.
+Like so:
+/ask phuff What is your favorite color?
+You can publish questions asked to you by typing:
+/ask publish <question-number> <channel-name>
+Like so:
+/ask publish 1 #my_favorite_channel
+If you don't like a question you can delete it by doing:
+/ask delete <question-number>
+If you want to see all the pending questions you've been asked do:
+/ask list
+If you want to see questions you've deleted you can do:
+/ask list deleted
+If you want to see qusetions you've published you can do:
+/ask list published
+If you want to see them all do:
+/ask list all
+You can republish a question like so:
+/ask republish <question-number> <channel-name>
+You can undelete a question like so:
+/ask undelete <question-number>
