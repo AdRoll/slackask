@@ -11,7 +11,16 @@ When you're off to the races you can use it from slack like so:
 /ask @phuff What is your favorite color?
 ```
 
-@phuff can then post the question if they so choose:
+phuff will get a private message from SlackBot that looks like this:
+
+```
+Somebody asked you a new question! #1: What is your favorite color?
+To publish it: /ask publish 1 <channel-name>
+To list your questions: /ask list
+For more help: /ask help
+```
+
+phuff can then post the question if they so choose:
 
 ```
 /ask publish 1 #my-favorite-channel-name
