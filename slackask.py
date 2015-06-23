@@ -26,31 +26,31 @@ def publish(username, question_number, channel, republish=False):
     else:
         question = flask.g.db_session.query(Question).filter_by(username=username, status=QuestionStatus.pending, number=question_number).first()
     if question is None:
-        return "I didn't find any questions for you with number {}\n".format(question_number), 200
+        return u"I didn't find any questions for you with number {}\n".format(question_number), 200
     output = flask.render_template("question.txt", username=username, question=question) + "\n"
     result = sendMessage(('#' + channel) if channel[0] != '#' else channel, output)
     if result.ok:
         question.status=QuestionStatus.published
         flask.g.db_session.add(question)
-        return "Question {} published\n".format(question_number), 200
+        return u"Question {} published\n".format(question_number), 200
     else:
-        return "Problem asking question {}.  Try again later.\n".format(question_number), 500
+        return u"Problem asking question {}.  Try again later.\n".format(question_number), 500
 
 def delete(username, question_number):
     question = flask.g.db_session.query(Question).filter_by(username=username, status=QuestionStatus.pending, number=question_number).first()
     if question is None:
-        return "I didn't find any questions for you with number {}\n".format(question_number), 200
+        return u"I didn't find any questions for you with number {}\n".format(question_number), 200
     question.status=QuestionStatus.deleted
     flask.g.db_session.add(question)
-    return "Question {} deleted\n".format(question_number), 200
+    return u"Question {} deleted\n".format(question_number), 200
 
 def undelete(username, question_number):
     question = flask.g.db_session.query(Question).filter_by(username=username, status=QuestionStatus.deleted, number=question_number).first()
     if question is None:
-        return "I didn't find any questions for you with number {}\n".format(question_number), 200
+        return u"I didn't find any questions for you with number {}\n".format(question_number), 200
     question.status=QuestionStatus.pending
     flask.g.db_session.add(question)
-    return "Question {} undeleted\n".format(question_number), 200
+    return u"Question {} undeleted\n".format(question_number), 200
 
 def sendMessage(channelName, message):
     payload = {"channel": channelName,
@@ -72,15 +72,17 @@ def askUser(username, question_text):
     result = sendMessage('@{}'.format(username), questionTemplate)
     if result.ok:
         flask.g.db_session.add(question)
-        return "Asked {} the following question {}\n".format(username, question_text), 200
+        return u"Asked {} the following question {}\n".format(username, question_text), 200
     else:
-        return "Had trouble asking the question to that user.\n", 200
+        return u"Had trouble asking the question to that user.\n", 200
 
 
 def trimNumber(numberString):
     return numberString[1:] if numberString[0] == '#' else numberString
 
 def routeCommand(commandString, username, channel):
+    if commandString.strip() == "":
+        return flask.render_template("help.txt") + "\n"
     commandPieces = commandString.split()
     command = commandPieces[0]
     commandArgs = commandPieces[1:]
@@ -114,12 +116,12 @@ def routeCommand(commandString, username, channel):
 @app.route("/", methods=["POST"])
 def handleSlackCommand():
     if flask.request.form["token"] != app.config['SLACKASK_TOKEN']:
-                       return "Request forbidden\n", 403
+                       return u"Request forbidden\n", 403
     return routeCommand(flask.request.form["text"], flask.request.form["user_name"] if "user_name" in flask.request.form else None, ("#" + flask.request.form["channel_name"]) if "channel_name" in flask.request.form else None)
 
 @app.route("/healthcheck", methods=["GET"])
 def healthCheck():
-    return "Ok", 200
+    return u"Ok", 200
 
 @app.before_request
 def application_setup():

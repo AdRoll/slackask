@@ -1,2 +1,3 @@
-{{ username }} was asked the following question:
-{{ question.question }}
+_{{ username }} was asked the following question:_
+> {{ question.question }}
+_If you want to ask anonymous questions like this, try /ask_

@@ -1,4 +1,5 @@
-Somebody asked you a new question! #{{ question.number }}: {{ question.question }}
-To publish it: /ask publish {{ question.number }} <channel-name>
-To list your questions: /ask list
-For more help: /ask help
+_ Somebody asked you a new question! #{{ question.number }}: _
+> {{ question.question }}
+_ To publish it: /ask publish {{ question.number }} #channel-name _
+ _ To list your questions: /ask list _
+ _ For more help: /ask help _
